@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: linear-gradient(to bottom, #87CEEB, #30df30); min-height: 100vh; margin: 0; padding: 20px; }
+        input { padding: 10px; margin: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 5px; border-radius: 5px; border: none; background: #4CAF50; color: white; cursor: pointer; }
+        button:hover { background: #45a049; }
+        ul { list-style-type: none; padding: 0; max-width: 400px; margin: 20px auto; }
+        li { padding: 10px; background: #fff; margin: 5px; border-radius: 5px; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        li.completed span { text-decoration: line-through; color: #888; }
+        .delete-btn { margin-left: auto; background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; }
+        .delete-btn:hover { background: #d32f2f; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <input type="text" id="input" placeholder="Add a new task...">
+    <button id="add">Add Task</button>
+    <ul id="list"></ul>
+    <script>
+        let inp = document.querySelector("#input");
+        let list = document.querySelector("#list");
+        let addbtn = document.querySelector("#add");
+
+        addbtn.addEventListener("click", addTask);
+        inp.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") addTask();
+        });
+
+        function addTask() {
+            if (inp.value.trim() === "") return;
+            let li = document.createElement("li");
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            let span = document.createElement("span");
+            span.textContent = inp.value;
+            let deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "delete-btn";
+
+            li.appendChild(checkbox);
+            li.appendChild(span);
+            li.appendChild(deleteBtn);
+            list.appendChild(li);
+
+            inp.value = "";
+
+            checkbox.addEventListener("change", () => {
+                li.classList.toggle("completed");
+            });
+
+            deleteBtn.addEventListener("click", () => {
+                li.remove();
+            });
+        }
+    </script>
+</body>
+</html>
